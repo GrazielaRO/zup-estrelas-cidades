@@ -22,6 +22,10 @@ public class CidadesPojo {
 		this.rendaPerCapita = rendaPerCapita;
 		this.dataDeFundacao = dataDeFundacao;
 	}
+	
+	public CidadesPojo() {
+		
+	}
 
 	public String getNome() {
 		return nome;

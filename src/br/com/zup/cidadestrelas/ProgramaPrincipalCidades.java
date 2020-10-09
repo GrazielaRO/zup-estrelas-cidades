@@ -1,5 +1,6 @@
 package br.com.zup.cidadestrelas;
 
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.Normalizer;
@@ -99,10 +100,25 @@ public class ProgramaPrincipalCidades {
 		CidadesPojo cidade = new CidadesPojo(nomeCidade, cep, numeroHabitantes, capital, estado, rendaPerCapita, dataFundacao);
 		
 		CidadesDao cidadedao = new CidadesDao();
-		
+	
 		cidadedao.insereCidade(cidade);
+	}
+	
+	public static void excluirCidade(Scanner sc) throws SQLException {
 		
-		System.out.println("\nCidade cadastrada com sucesso!\n");
+		final String REGEX_CEP = "\\d{5}-\\d{3}";
+		System.out.print("\nInforme o CEP da cidade que deseja excluir: ");
+		String cep = sc.next();
+		
+		while (!Pattern.matches(REGEX_CEP, cep)) {
+			System.out.print("\nCEP incorreto!\n\nTente novamente (ex.: 39867-947): ");
+			cep = sc.next();
+		}
+		
+		CidadesDao cidadedao = new CidadesDao();
+		
+		cidadedao.deletaCidade(cep);
+		
 	}
 	
 	public static void main(String[] args) throws SQLException {
@@ -128,7 +144,9 @@ public class ProgramaPrincipalCidades {
 				break;
 
 			case "2":
-
+				
+				excluirCidade(sc);
+				
 				break;
 
 			case "3":
