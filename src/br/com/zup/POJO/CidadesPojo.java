@@ -26,6 +26,13 @@ public class CidadesPojo {
 	public CidadesPojo() {
 		
 	}
+	
+	@Override
+	public String toString() {
+		return "Nome = " + nome + "| CEP = " + cep + "| Numero de habitantes = " + numeroHabitantes + "| Capital = "
+				+ capital + "| Estado = " + estado + "| Renda per capta = " + rendaPerCapita + "| Data de fundacao = "
+				+ dataDeFundacao + "";
+	}
 
 	public String getNome() {
 		return nome;

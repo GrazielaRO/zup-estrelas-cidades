@@ -4,6 +4,7 @@ package br.com.zup.cidadestrelas;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.Normalizer;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,7 @@ public class ProgramaPrincipalCidades {
 	}
 	
 	public static void menuPrincipal(Scanner sc) {
-		System.out.println("(1) - Incluir cidade");
+		System.out.println("\n(1) - Incluir cidade");
 		System.out.println("(2) - Excluir cidade");
 		System.out.println("(3) - Alterar dados cidade");
 		System.out.println("(4) - Consultar cidade");
@@ -35,7 +36,7 @@ public class ProgramaPrincipalCidades {
 		
 	}
 
-	public static void incluirCidade(Scanner sc) throws SQLException {
+	public static void incluirCidade(Scanner sc){
 		
 		int capital = 0;
 		final String REGEX_NOME_CIDADE = "[a-zA-Z ]+";
@@ -102,6 +103,7 @@ public class ProgramaPrincipalCidades {
 		CidadesDao cidadedao = new CidadesDao();
 	
 		cidadedao.insereCidade(cidade);
+		
 	}
 	
 	public static void excluirCidade(Scanner sc) throws SQLException {
@@ -121,6 +123,31 @@ public class ProgramaPrincipalCidades {
 		
 	}
 	
+	public static void consultarCidade(Scanner sc) {
+		
+		System.out.print("\nInforme o CEP que deseja consultar: ");
+		String cep = sc.next();
+		
+		CidadesDao cidadedao = new CidadesDao();
+		
+		List<CidadesPojo> cidadesBD = cidadedao.listaCidadePorCEP(cep);
+		
+		for (CidadesPojo cidades : cidadesBD) {
+			System.out.println(cidades);
+		}
+		
+	}
+	
+	public static void listarCidadesCadastradas() {
+		
+		CidadesDao cidadedao = new CidadesDao();
+		List<CidadesPojo> cidadesBD = cidadedao.listaCidades();
+		
+		for (CidadesPojo cidades : cidadesBD) {
+			System.out.println(cidades);
+		}
+	}
+	
 	public static void main(String[] args) throws SQLException {
 
 		Connection conn = new ConnectionFactory().getConnection();
@@ -135,6 +162,7 @@ public class ProgramaPrincipalCidades {
 			menuPrincipal(sc);
 			System.out.print("Escolha uma das opções acima: ");
 			opcao = sc.next();
+			System.out.println("\n");
 
 			switch (opcao) {
 			case "1":
@@ -155,9 +183,13 @@ public class ProgramaPrincipalCidades {
 
 			case "4":
 
+				consultarCidade(sc);
+				
 				break;
 
 			case "5":
+				
+				listarCidadesCadastradas();
 
 				break;
 
