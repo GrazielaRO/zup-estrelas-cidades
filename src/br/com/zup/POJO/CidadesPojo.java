@@ -14,7 +14,6 @@ public class CidadesPojo {
 	
 	public CidadesPojo (String nome, String cep, int numeroHabitantes, int capital, String estado, float rendaPerCapita,
 			String dataDeFundacao) {
-		super();
 		this.nome = nome;
 		this.cep = cep;
 		this.numeroHabitantes = numeroHabitantes;
