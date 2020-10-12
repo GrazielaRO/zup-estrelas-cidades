@@ -2,6 +2,7 @@ package br.com.zup.cidadestrelas;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -31,6 +32,12 @@ public class ProgramaPrincipalCidades {
 		System.out.println("(0) - Sair do programa\n");
 
 	}
+	
+	public static String retiraAcento(String str) {
+		String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+		return pattern.matcher(nfdNormalizedString).replaceAll("");
+	}
 
 	public static void incluirCidade(Regex regex, CidadesDao cidadedao, Scanner sc) {
 
@@ -39,7 +46,7 @@ public class ProgramaPrincipalCidades {
 
 		sc.nextLine();
 		System.out.print("\nInforme o nome da cidade: ");
-		String nomeCidade = sc.nextLine();
+		String nomeCidade = retiraAcento(sc.nextLine());
 
 		regex.validaNomeCidade(sc, nomeCidade);
 
@@ -170,7 +177,7 @@ public class ProgramaPrincipalCidades {
 
 		List<CidadesPojo> cidadesBD = cidadedao.listaCidadesCapitaisOuNao(capital);
 
-		if (capital == 1) {
+		if (capital == 1) { 
 			System.out.println("\nRelação das cidades que são capitais: \n");
 			for (CidadesPojo cidades : cidadesBD) {
 				System.out.println(cidades);
