@@ -1,7 +1,5 @@
 package br.com.zup.POJO;
 
-import java.sql.Date;
-
 public class CidadesPojo {
 	
 	private String nome;
@@ -29,7 +27,7 @@ public class CidadesPojo {
 	
 	public String toString() {
 		return "Nome = " + nome + "| CEP = " + cep + "| Numero de habitantes = " + numeroHabitantes + "| Capital = "
-				+ capital + "| Estado = " + estado + "| Renda per capta = " + rendaPerCapita + "| Data de fundacao = "
+				+ capital + "| Estado = " + estado + "| Renda per capita = " + rendaPerCapita + "| Data de fundacao = "
 				+ dataDeFundacao + "";
 	}
 

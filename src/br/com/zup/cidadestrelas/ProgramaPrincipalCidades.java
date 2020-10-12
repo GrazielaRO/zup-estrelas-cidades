@@ -2,7 +2,6 @@ package br.com.zup.cidadestrelas;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.Normalizer;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -18,12 +17,6 @@ public class ProgramaPrincipalCidades {
 		System.out.println("------------------------------------------------------------");
 		System.out.println("                   CIDADES DO BRASIL                        ");
 		System.out.println("------------------------------------------------------------\n");
-	}
-
-	public static String retiraAcento(String str) {
-		String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
-		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-		return pattern.matcher(nfdNormalizedString).replaceAll("");
 	}
 
 	public static void menuPrincipal(Scanner sc) {
@@ -46,7 +39,7 @@ public class ProgramaPrincipalCidades {
 
 		sc.nextLine();
 		System.out.print("\nInforme o nome da cidade: ");
-		String nomeCidade = retiraAcento(sc.nextLine());
+		String nomeCidade = sc.nextLine();
 
 		regex.validaNomeCidade(sc, nomeCidade);
 
@@ -60,7 +53,7 @@ public class ProgramaPrincipalCidades {
 		
 		regex.validaNumeroHabitantes(sc, numHabitantes);
 		
-		if (Pattern.matches("[0-9]+", numHabitantes)) {
+		if (Pattern.matches(regex.getNumeroDeHabitantes(), numHabitantes)) {
 			numeroHabitantes = Integer.valueOf(numHabitantes);
 		}
 

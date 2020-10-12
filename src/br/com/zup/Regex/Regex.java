@@ -1,6 +1,5 @@
 package br.com.zup.Regex;
 
-import java.text.Normalizer;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -14,6 +13,7 @@ public class Regex {
 	private String numeroDeHabitantes;
 	
 	
+
 	public Regex() {
 		
 		this.nomeCidade = "[a-zA-Z ]+";
@@ -24,17 +24,11 @@ public class Regex {
 		this.numeroDeHabitantes = "[0-9]+";
 	}
 	
-	private String retiraAcento(String str) {
-		String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
-		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-		return pattern.matcher(nfdNormalizedString).replaceAll("");
-	}
-	
 	public void validaNomeCidade (Scanner sc, String nomeCidade) {
 		while (!Pattern.matches(this.nomeCidade, nomeCidade)) {
 			System.out.print(
 					"\nO nome da cidade deve conter apenas letras do alfabeto.\n\nDigite novamente o nome da cidade: ");
-			nomeCidade = retiraAcento(sc.nextLine());
+			nomeCidade = sc.nextLine();
 		}
 	}
 
@@ -83,5 +77,8 @@ public class Regex {
 					+ "\nDigite novamente o número de habitantes: ");
 			numHabitantes = sc.next();
 		}
+	}
+	public String getNumeroDeHabitantes() {
+		return numeroDeHabitantes;
 	}
 }
