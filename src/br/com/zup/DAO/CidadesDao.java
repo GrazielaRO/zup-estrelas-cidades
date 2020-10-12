@@ -193,9 +193,9 @@ public class CidadesDao {
 
 	public void deletaCidade(String cep) {
 
-		String sql = "delete from cidade where cep = ?";
-
 		try {
+			
+			String sql = "delete from cidade where cep = ?";
 
 			PreparedStatement stmt = this.conn.prepareStatement(sql);
 
