@@ -46,47 +46,47 @@ public class ProgramaPrincipalCidades {
 
 		sc.nextLine();
 		System.out.print("\nInforme o nome da cidade: ");
-		String nomeCidade = retiraAcento(sc.nextLine());
+		String nomeDaCidade = retiraAcento(sc.nextLine());
 
-		regex.validaNomeCidade(sc, nomeCidade);
+		String nomeCidade = regex.validaNomeCidade(sc, nomeDaCidade);
 
 		System.out.print("\nInforme o CEP (ex.: 39867-947): ");
-		String cep = sc.next();
+		String cepInformado = sc.next();
 
-		regex.validaCep(sc, cep);
+		String cep = regex.validaCep(sc, cepInformado);
 		
 		System.out.print("\nInforme quantos habitantes tem a cidade: ");
 		String numHabitantes = sc.next();
 		
-		regex.validaNumeroHabitantes(sc, numHabitantes);
+		String numHabitantesValidado = regex.validaNumeroHabitantes(sc, numHabitantes);
 		
-		if (Pattern.matches(regex.getNumeroDeHabitantes(), numHabitantes)) {
-			numeroHabitantes = Integer.valueOf(numHabitantes);
+		if (Pattern.matches(regex.getNumeroDeHabitantes(), numHabitantesValidado)) {
+			numeroHabitantes = Integer.valueOf(numHabitantesValidado);
 		}
 
 		System.out.print("\nDigite 1 se a cidade for uma capital ou 0 caso não seja uma capital: ");
 		String capitalInterior = sc.next();
 
-		regex.validaCapitalInterior(sc, capitalInterior);
+		String capitalInteriorValidado = regex.validaCapitalInterior(sc, capitalInterior);
 
-		if (capitalInterior.equals("1") || capitalInterior.equals("0")) {
-			capital = Integer.valueOf(capitalInterior);
+		if (capitalInteriorValidado.equals("1") || capitalInteriorValidado.equals("0")) {
+			capital = Integer.valueOf(capitalInteriorValidado);
 		}
 
 		sc.nextLine();
 		System.out.print("\nA qual a sigla do estado que pertence essa cidade (ex.: SP)? ");
-		String siglaEstado = sc.nextLine().toUpperCase();
+		String sigla = sc.nextLine().toUpperCase();
 
-		regex.validaSiglaEstado(sc, siglaEstado);
+		String siglaEstado = regex.validaSiglaEstado(sc, sigla);
 
 		System.out.print("\nInforme a renda per capita da cidade: ");
 		float rendaPerCapita = sc.nextFloat();
 
 		sc.nextLine();
 		System.out.print("\nQual a data de fundação da cidade (ex.: AAAA-MM-DD): ");
-		String dataFundacao = sc.next();
+		String dataFundacaoInformada = sc.next();
 
-		regex.validaDataFundacao(sc, dataFundacao);
+		String dataFundacao = regex.validaDataFundacao(sc, dataFundacaoInformada);
 
 		CidadesPojo cidade = new CidadesPojo(nomeCidade, cep, numeroHabitantes, capital, siglaEstado, rendaPerCapita,
 				dataFundacao);
@@ -98,9 +98,9 @@ public class ProgramaPrincipalCidades {
 	public static void excluirCidade(Regex regex, CidadesDao cidadedao, Scanner sc) throws SQLException {
 
 		System.out.print("\nInforme o CEP da cidade que deseja excluir: ");
-		String cep = sc.next();
+		String cepInformado = sc.next();
 
-		regex.validaCep(sc, cep);
+		String cep = regex.validaCep(sc, cepInformado);
 
 		cidadedao.deletaCidade(cep);
 
@@ -109,9 +109,9 @@ public class ProgramaPrincipalCidades {
 	public static void consultarCidadePeloCep(Regex regex, CidadesDao cidadedao, Scanner sc) {
 
 		System.out.print("\nInforme o CEP que deseja consultar (ex.: 39867-947): ");
-		String cep = sc.next();
+		String cepInformado = sc.next();
 
-		regex.validaCep(sc, cep);
+		String cep = regex.validaCep(sc, cepInformado);
 
 		List<CidadesPojo> cidadesBD = cidadedao.listaCidadePorCEP(cep);
 
@@ -127,11 +127,11 @@ public class ProgramaPrincipalCidades {
 		System.out.print("\nDigite a letra pela qual o nome das cidades deve começar: ");
 		String letra = sc.next().toUpperCase();
 
-		regex.validaPrimeiraLetraCidade(sc, letra);
+		String letraInicial = regex.validaPrimeiraLetraCidade(sc, letra);
 
-		List<CidadesPojo> cidadesBD = cidadedao.listaCidadesComMesmoInicio(letra);
+		List<CidadesPojo> cidadesBD = cidadedao.listaCidadesComMesmoInicio(letraInicial);
 
-		System.out.printf("\nLista das cidades cadastradas inciciadas com a letra %s:\n\n", letra);
+		System.out.printf("\nLista das cidades cadastradas inciciadas com a letra %s:\n\n", letraInicial);
 		for (CidadesPojo cidades : cidadesBD) {
 			System.out.println(cidades);
 		}
@@ -142,11 +142,11 @@ public class ProgramaPrincipalCidades {
 		System.out.print("\nDigite a sigla do estado: ");
 		String sigla = sc.next().toUpperCase();
 
-		regex.validaSiglaEstado(sc, sigla);
+		String siglaEstado = regex.validaSiglaEstado(sc, sigla);
 
-		List<CidadesPojo> cidadesBD = cidadedao.listaCidadesPelaSiglaEstado(sigla);
+		List<CidadesPojo> cidadesBD = cidadedao.listaCidadesPelaSiglaEstado(siglaEstado);
 
-		System.out.printf("\nLista das cidades cadastradas pertencentes ao Estado de %s:\n\n", sigla);
+		System.out.printf("\nLista das cidades cadastradas pertencentes ao Estado de %s:\n\n", siglaEstado);
 		for (CidadesPojo cidades : cidadesBD) {
 			System.out.println(cidades);
 		}
@@ -155,9 +155,9 @@ public class ProgramaPrincipalCidades {
 	public static void contaCidadesDoMesmoEstado(Regex regex, CidadesDao cidadedao, Scanner sc) {
 
 		System.out.print("\nInforme o estado: ");
-		String siglaEstado = sc.next().toUpperCase();
+		String sigla = sc.next().toUpperCase();
 
-		regex.validaSiglaEstado(sc, siglaEstado);
+		String siglaEstado = regex.validaSiglaEstado(sc, sigla);
 
 		System.out.printf("\nQuantidade de cidades no estado de %s: ", siglaEstado);
 		System.out.println(cidadedao.contaQuantidadeDeCidadesDoEstado(siglaEstado));
@@ -167,9 +167,9 @@ public class ProgramaPrincipalCidades {
 
 		int capital = 0;
 		System.out.print("\nDigite 1 para listar as cidades que são capitais ou 0 para as que não são: ");
-		String capitalInterior = sc.next();
+		String capitalInteriorInformado = sc.next();
 
-		regex.validaCapitalInterior(sc, capitalInterior);
+		String capitalInterior = regex.validaCapitalInterior(sc, capitalInteriorInformado);
 
 		if (capitalInterior.equals("1") || capitalInterior.equals("0")) {
 			capital = Integer.valueOf(capitalInterior);
