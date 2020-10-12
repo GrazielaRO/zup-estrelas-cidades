@@ -18,24 +18,29 @@ public class CidadesDao {
 		this.conn = new ConnectionFactory().getConnection();
 	}
 	
-	public static void contrutorListasDeCidades(List<CidadesPojo> cidades, String sql, PreparedStatement stmt) throws SQLException {
+	public static void contrutorListasDeCidades(List<CidadesPojo> cidades, String sql, PreparedStatement stmt){
 		
-		ResultSet rs = stmt.executeQuery();
-		
-		while (rs.next()) {
-			CidadesPojo cidade = new CidadesPojo();
+		try {
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				CidadesPojo cidade = new CidadesPojo();
 
-			cidade.setNome(rs.getString("nome"));
-			cidade.setCep(rs.getString("CEP"));
-			cidade.setNumeroHabitantes(rs.getInt("numero_habitantes"));
-			cidade.setCapital(rs.getInt("capital"));
-			cidade.setEstado(rs.getString("estado"));
-			cidade.setRendaPerCapita(rs.getFloat("renda_per_capta"));
-			cidade.setDataDeFundacao(rs.getString("data_de_fundacao"));
+				cidade.setNome(rs.getString("nome"));
+				cidade.setCep(rs.getString("CEP"));
+				cidade.setNumeroHabitantes(rs.getInt("numero_habitantes"));
+				cidade.setCapital(rs.getInt("capital"));
+				cidade.setEstado(rs.getString("estado"));
+				cidade.setRendaPerCapita(rs.getFloat("renda_per_capta"));
+				cidade.setDataDeFundacao(rs.getString("data_de_fundacao"));
 
-			cidades.add(cidade);
+				cidades.add(cidade);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("\nOcorreu um erro no processo!\n");
+			System.out.println(e.getMessage());
 		}
-
 	}
 
 	public void insereCidade(CidadesPojo cidade) {
@@ -148,7 +153,7 @@ public class CidadesDao {
 
 	public int contaQuantidadeDeCidadesDoEstado(String estado) {
 
-		String sql = "select count(*) from cidade where estado = ?;";
+		String sql = "select count(*) from cidade where estado = ?";
 
 		int contadorCidades = 0;
 

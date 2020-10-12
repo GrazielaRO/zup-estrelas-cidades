@@ -171,7 +171,6 @@ public class ProgramaPrincipalCidades {
 		List<CidadesPojo> cidadesBD = cidadedao.listaCidadesCapitaisOuNao(capital);
 
 		if (capital == 1) {
-
 			System.out.println("\nRelação das cidades que são capitais: \n");
 			for (CidadesPojo cidades : cidadesBD) {
 				System.out.println(cidades);
